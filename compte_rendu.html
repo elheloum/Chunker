@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Compte rendu du projet !</title>
+<style type="text/css">
+	body{
+	background-image: linear-gradient( #E0FFFF,#FFFAFA);
+	text-align: center;
+	margin-top: 30px;
+	}
+
+	table{
+		margin:auto;
+	}
+	.textFR{
+		text-decoration: underline;
+	}
+
+	.textAng{
+		text-decoration: underline;
+	}
+</style>
+</head>
+<body>
+	<h1><b>Compte rendu du projet Formalisme</b></h1>
+	<p><b>Définition du formalisme</b></p>
+	<p>Le formalisme du Chunker dépend du formalisme des règles et du lexique qui le constituent. Nous allons voir comment ces règles et ce lexique sont formalisés.</p>
+	<p><b>Le lexique</b></p>
+	<p>Le lexique est structuré d'une manière assez basique. Il faut associer à chaque forme sa catégorie.<br/><br/>Par exemple : <br/> le:Det<br/>et:Conj </p>
+	<p>Le jeu d'étiquette utilisé est le suivant: <br/>
+	<div class="tableau_et">
+		<table>
+			<tr>
+				<th>Etiquette</th>
+				<th>Signification</th>
+			</tr>
+			<tr>
+				<td>Det</td>
+				<td>Déterminant</td>
+			</tr>
+			<tr>
+				<td>Prep</td>
+				<td>Préposition</td>
+			</tr>
+			<tr>
+				<td>Pps</td>
+				<td>Pronom Personnel</td>
+			</tr>
+			<tr>
+				<td>Conj</td>
+				<td>Conjonction</td>
+			</tr>
+			<tr>
+				<td>Adv</td>
+				<td>Adverbe</td>
+			</tr>
+			<tr>
+				<td>Mod</td>
+				<td>Verbe Modal</td>
+			</tr>
+			<tr>
+				<td>Pro</td>
+				<td>Pronom</td>
+			</tr>
+			<tr>
+				<td>Neg</td>
+				<td>Négation</td>
+			</tr>
+			<tr>
+				<td>PCT</td>
+				<td>Ponctuation</td>
+			</tr>
+		</table>
+	</div>
+	<p>Toutefois, nous allons être face à un problème linguistique qui est l'ambiguïté de certains mots (ex: "danse" qui peut être le verbe danser au présent ou le nom féminin danse ou "de" qui peut être un déterminant ou une préposition) ou la gestion des expressions polylexicales (ex: face à). Pour améliorer un peu l'outil, nous pouvons créer des jeu d'étiquettes adhoc ex PrepDet pour le "de".
+	<p><b>N.B.</b> Dans le lexique, on doit trouver que les mots ayant les catégories suivantes : <br/><br/> - Déterminant <br/> - Préposition <br/> - Verbe modal <br/> - Pronom personnel <br/> - Négation <br/> - Adverbe <br/> - Ponctuations <br/> - Conjonction <br/> - Pronom <br/></p>
+	<p><b>Les règles</b></p>
+	<p>Les règles sont constituées principalement d'une condition (la partie gauche de la règle) et de l'action (la partie droite de la règle). Une deuxième condition peut également être présente, cette dernière a comme but de voir la nature du chunk en cours et de permettre ou pas l'ouverture d'un nouvel chunk.<br/><br/>Les règles auront alors la forme suivante:<br/><br/>Det&!Prep:][N<br/>Cette règle veut dire qui si on rencontre un déterminant et on n'a pas le chunk qui correspont à la préposition ouvert, on ouvre un nouvel chunk nominal. Sinon on ne l'ouvre pas.<br/>Conj:][Conj<br/>Cette rèle s'interprère de la manière suivante: si on rencontre une conjonction, on ouvre le chunk correspondant.</p>
+	<p>Les règles peuvent admettre plus d'améliorations comme par exemple après l'ouverture d'un chunk de ponctuation on le ferme tout de suite car dans certains cas, si la ponctuation est suivie par un mot qui n'a pas de règle, il est inclus avec le chunk de la ponctuation. Exemple : <br/>[PCT <  oh  ]<br/>"oh" ne se trouve ni dans le lexique ni dans les règles donc ce dernier est automatique inclus dans le chunk PCT ce qui n'est pas correct.</p>
+	<p><b>Les tests</b></p>
+	<p>Le chunker a été testé sur un texte en français et un texte en anglais</p>
+	<p>Le texte français est un <a target="_blank" href="corpus_francais.txt">extrait</a> d'un <a target="_blank" href="https://lejournal.cnrs.fr/articles/dans-la-tete-des-bebes">article scientifique </a>du <a target="_blank" href="https://lejournal.cnrs.fr/vivant">CNRS</a></p>
+	<p>La texte anglais est un <a target="_blank" href="corpus_anglais.txt">extrait</a> d'un <a target="_blank" href="https://www.nature.com/articles/d41586-018-03268-4">article scientifique </a>de <a target="_blank" href="https://www.nature.com/nature/">Nature</a></p>
+	<div class="textFR"><p>Analyse des résultats du texte français :</p></div>
+	<p>Globalement, les résultats obtenus sont satisfaisants. Néanmoins, quelques erreurs sont présentes:<br/> - [PCT , face ] : vu que "face" ne se trouve pas dans le lexique et n'a pas de règle, il a été inclus dans le chunk de PCT. Cette erreur a été mentionné dans la partie règle.<br/> - [PCT , face ][P à un écran ] : "face à" est une expression polylexicale mais elle n'a pas été prise en compte car nous l'avons pas déclaré dans notre lexique. Une solution possible est de traiter les expressions polylexicales au préalable, en comparant à un corpus d'expressions polylexicales. Si elle existe dans ce corpus alors elle appartiendra à un chunk spécial.<br/> - [PCT < tu dazes  ] : même si "tu" a été déclaré comme Pps et donc a une règle spécifique, il a été inclus dans le chunk de PCT. Malheureusement, cette erreur est incompréhensible et n'a pas pu être résolu.<br/> - Le traitement des verbes : une solution possible pour traiter les verbes sans les inclure un par un dans le lexique, est de prendre toutes les terminaisons possibles des verbes et de dissocier radical de terminaison. Si la terminaison obtenue suite à la dissociation est contenu dans les terminaisons possible des verbes, on ouvre un chunk verbal. Ce traitement se fera lors de la récupération du tokent et si on a pas trouvé de règles à appliquer.<br/></p>
+	<div class="textAng"><p>Analyse des résultats du texte anglais :</p></div>
+	<p>Les mêmes règles utilisées pour le texte français ont été utilisées pour le texte anglais. Uniquement le lexique a été modifié.<br/> - Nous rencontrons le même problème, si le mot est précédé par une ponctuation et ne se trouve pas dans le lexique, ce dernier est rajouté au chunk PCT.<br/></p>
+	<p><b>Les résutats</b></p>
+	<p>Les résultats pour le <a target="_blank" href="texteEnChunkFrancais.txt">texte français.</a></p>
+	<p>Les résultats pour le <a target="_blank" href="texteEnChunkAnglais.txt">texte anglais.</a></p>
+	<p><b>Précision et rappel</b></p>
+	<div class="textFR"><p>Texte français</p></div>
+	<p>Précision : 115/131 = 0.877 </p>
+	<p>Rappel : -- </p>
+	<div class="textAng"><p>Texte anglais</p></div>
+	<p>Précision : 114/126 = 0,904</p>
+	<p>Rappel : -- </p>
+	<p>Nous remarquons que l'analyse sur le texte anglais est plus performante que sur le texte en français.</p>
+	<p><b>Conclusion</b></p>
+	<p>Suite à toutes ces analyses, nous pouvons conclure que nous n'avons pas besoin de connaître tout les mots d'une langue pour pouvoir l'analyser. Le français reste une langue difficile à traiter en comparant à l'anglais car par exemple, en français, chaque sujet doit être conjugué différemment alors qu’en anglais, seule la troisième personne est différente. Donc c'est beaucoup plus facile de traiter le cas des verbes en anglais qu'en français.</p><p>En ce qui concerne les règles, nous pouvons remarqué, grâce aux graphiques de statistique, que les 3 règles les plus utilisées, pour les 2 textes, sont la règle des prépositions, la règle des ponctuations et la règle des déterminant.</p>
+	<p>Finalement, le chunker ne donne pas des résultats parfaits, les règles peuvent être plus affiner (gestion des règles de reconnaissance de verbe ou autre ..), le lexique aussi (en intégrant potentiellement des lexiques d'expressions polylexicales ou autres). </p>
+</body>
+</html>

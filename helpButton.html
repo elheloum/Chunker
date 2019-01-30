@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta charset=utf-8>
+<title>Help For The Chuncking !</title>
+<link rel=stylesheet type=text/css href=theme_Ch.css />
+</head>
+<body>
+	 <table>
+		<tr >
+		<th >Langue du texte</th>
+	    <th >Catégories</th>
+	    <th >Règles</th>
+	    <th >Texte Tokénisé</th>
+	    </tr>
+	    <tr>
+	    <td > 
+	    	Français
+	    </td>
+	    <td >
+	   		et:Cc<br/>
+			était:Mod<br/>
+			il:Pps<br/>
+			gyraient:Verbe<br/>
+			les:Det<br/>
+			sur:Prep<br/>
+			vribrlaient:Verbe<br/>
+			.:PCT<br/>
+		</td>
+	    <td >
+	    	Pps:][SV<br/>
+			Mod&!Pps:][V<br/>
+			Cc:][CC<br/>
+			Det&!Prep:][N<br/>
+			Prep:][P<br/>
+			PCT:][PCT<br/>
+			Verbe&!Det:][V<br/>
+			</td>
+	    <td >il<br/>
+	    	était<br/>
+	    	reveneur<br/>
+	    	et<br/>
+	    	les<br/>
+	    	slictueux<br/>
+	    	toves<br/>
+	    	sur<br/>
+	    	l'<br/>
+	    	allouinde<br/>
+	    	gyraient<br/>
+	    	et<br/>
+	    	vribrlaient<br/>
+	    	.</td>
+	    </tr>
+	    <tr>
+	    <td > 
+	    	Français
+	    </td>
+	    <td >
+	   		bois:Verbe<br/>
+	   		dans:Prep<br/>
+	   		je:Pro<br/>
+	   		.:PCT<br/>
+		</td>
+	    <td >
+	    	Pro:][SV<br/>
+	    	Prep:][P<br/>
+	    	PCT:][PCT<br/>
+		</td>
+	    <td >je<br/>
+	    	le<br/>
+	    	bois<br/>
+	    	dans<br/>
+	    	le<br/>bois
+	    	<br/>
+	    	.<br/>
+	    	je<br/>
+	    	le<br/>
+	    	mange<br/>
+	    	dans<br/>
+	    	le<br/>
+	    	bol<br/>
+	    	,<br/>
+	    	je<br/>
+	    	suis<br/>
+	    	fort</td>
+	    </tr>
+	     <tr>
+	     <td > 
+	    	Anglais
+	    </td>
+	    <td >
+	  		is:Verb<br/>	
+	  		for:Prep<br/>
+	  		of:Prep<br/>
+	   		patience:Name<br/>
+	   		success:Name<br/>
+	   		the:Det<br/>
+			!:PCT<br/>
+			
+		</td>
+	    <td >
+	    	Name&!Det:][N1<br/>
+	    	Det:][N2<br/>
+	    	Verb:][V<br/>
+	    	Prep:][P<br/>
+	    	PCT:][PCT<br/>
+		</td>
+	    <td >Patience<br/>
+	    	is<br/>
+	    	the<br/>
+	    	master<br/>
+	    	of<br/>
+	    	success<br/>
+	    	!<br/>
+	    	Success<br/>
+	    	is<br/>
+	    	the<br/>
+	    	key<br/>
+	    	for<br/>
+	    	freedom<br/>
+	    	!</td>
+	    </tr>
+	  </table>
+	  <button onclick="self.close()">Close</button>
+</body>
+</html>
